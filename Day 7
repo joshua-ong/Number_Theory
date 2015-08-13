@@ -1,0 +1,97 @@
+#computes a^b mod n
+#uses successive squaring and is EFFIECIENT!
+def modpow(a,b,n,d):
+	a = a %n
+	if (b == 1):
+		return(((a % n) * d) % n)
+	elif (b % 2 == 1):
+		return modpow(a,(b-1),n,(a * d % n))
+	else:
+		return modpow(((a ** 2) % n),(b / 2),n,d % n)
+
+#Finds the gcd of two numbers
+#Implements the Enclidean algorithm
+def gcdEA(a,b):
+	#take your two numbers
+	if(b > a):
+		x = a
+		a = b
+		b = x
+	ls = [] 
+	x = 10
+	count = 1
+	#figure out how many of the smaller numbers go into the biggest numbers
+	while(x > 1):
+		count = -int(a / b)
+		x = a % b
+		a = b
+		b = x
+		print (a,b,x,count)
+	ls = []
+	ls.append(x)
+	ls.append(count)
+	return ls
+	
+#computes the inverse of a mod n
+#returns 0 if there is no inverse
+def modinv(a,n):
+	ls = gcdEA(a,n)
+	x = ls[0]
+	count = ls[1]
+	if(x != 1):
+		return 0
+	return count
+
+"""
+old stufffff
+"""
+#Factoring, primes and base26
+#Takes a natural number and returns a list of its divisors.
+def divs(n):
+	display = []
+	for p in range(1,int(n ** .5) + 1):
+		if((n % p) == 0):
+			q = n / p 
+			display.append(p)
+			display.append(q)	
+	return display
+	
+#Takes a natural number and determines whether it is prime.
+#Returns True if the number is prime; false otherwise
+def isPrime(n):
+	div = divs(n)
+	if(len(div) >= 3):
+		return False  
+	return True
+#Computes how many numbers below n are relatively prime to n
+#by checking every number one at a time
+def phi(n):
+	ls = []
+	for i in range(0,n+1):
+		if(isPrime(i) == True):
+			ls.append(i)
+	return ls
+
+
+#Computes how many numbers below n are relatively prime to n
+#using the prime factorization of n and the formulas we 
+#have seen
+def phi2(n):
+	return 0
+
+def mi(n):
+	ls = []
+	while(n < 12252240):
+		if(n % 4199 == 0):
+			ls.append(n)			
+		n = n * 19
+	return ls
+
+
+
+
+
+
+
+
+
