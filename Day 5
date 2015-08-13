@@ -1,0 +1,137 @@
+#Summer Math Program
+#Lab 3
+#Affine Ciphers
+
+#Converts a string to a list of numbers
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toNumbers(message):
+	letters = []
+        for i in xrange(len(message)):
+                #print message[i]                                               
+                if ord('A') <= ord(message[i]) <= ord('Z'):
+                        letters.append(ord(message[i]) - ord('A'))
+                elif message[i] == ' ':
+                        letters.append(26)
+        return letters
+        
+#Converts a list of numbers to a string
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toWords(nmbrs):
+	chars=[]
+        for c in nmbrs:
+                if c == 26:
+                        chars.append(' ')
+                else:
+                        chars.append(chr(c+ord('A')))
+        toReturn = ""
+        for x in chars:
+                toReturn += x
+        return toReturn
+		
+
+def Viginere(message, keyword):
+	message = toNumbers(message)
+	keyword = toNumbers(keyword)
+	i = 0
+	j = 0
+	for i in range(0,len(message)):
+		message[i] = ( message[i] + keyword[j] ) % 27
+		j+=1
+		j = j % (len(keyword) - 1)
+	return toWords(message)
+#Decrypts from a Viginere cipher
+#encrypted is the encrypted message
+#containing only capital letters and spaces
+#keyword is the keyword used to encrypt the message
+def deViginere(message, keyword):
+	message = toNumbers(message)
+	keyword = toNumbers(keyword)
+	i = 0
+	j = 0
+	for i in range(0,len(message)):
+		message[i] = ( message[i] - keyword[j] ) % 27
+		j+=1
+		j = j % (len(keyword) - 1)
+	return toWords(message)
+
+        
+#Implements an affine cipher
+#message is the message to be encrypted
+#containing only capital letters and spaces
+#a and b are integers
+#takes x to ax+b mod 27
+def Affine(message, a, b):
+	message = toNumbers(message)
+	for i in range(0,len(message)):
+			message[i] = (a * message[i] + b) % 27
+	message = toWords(message)
+	return message	
+
+def unAffine(message, a, b):
+	message = toNumbers(message)
+	for i in range(0,len(message)):
+		message[i] = ((message[i] - b) / a) % 27
+	return toWords(message)
+		
+
+
+
+# Takes a message and returns a matrix consisting of two rows
+# The first row should be the first half of the message
+# The second row should be the second half of the message
+# You may need to pad the message with an extra character if it is not even length
+def block(message):
+	if (len(message) % 2 == 1):
+		message = message + " "
+	message = toNumbers(message)	
+	return matrix([message[0:len(message)/2],message[len(message)/2:len(message)]])
+
+# Takes a matrix of two rows and returns a list of numbers
+# The first half of the list is the first row of the matrix
+# The second half of the list is the second row of the matrix
+def unblock(matrix):
+	return matrix[0].append(matrix[1])
+
+
+#Implements a block cipher
+#message is the message to be encrypted
+#containing only capital letters and spaces
+#matrix is an 2x2 matrix
+#takes vector x to (matrix)x mod 27
+def blockAffine(message,matrix):
+	#encode
+	block(message)
+	#block(matrix)
+	message = (message * matrix) % 27
+	unblock(message)
+	return message
+	#decode
+"""	
+	block(message)
+	block(matrix)
+	matrix.inverse()
+	message = (message * matrix) % 27
+	unblock(message)
+"""		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
