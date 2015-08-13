@@ -1,0 +1,261 @@
+import random
+
+
+#Converts a string to a list of numbers
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toNumbers(message):
+	letters = []
+        for i in xrange(len(message)):
+                #print message[i]                                               
+                if ord('A') <= ord(message[i]) <= ord('Z'):
+                        letters.append(ord(message[i]) - ord('A'))
+                elif message[i] == ' ':
+                        letters.append(26)
+        return letters
+        
+#Converts a list of numbers to a string
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toWords(nmbrs):
+	chars=[]
+        for c in nmbrs:
+                if c == 26:
+                        chars.append(' ')
+                else:
+                        chars.append(chr(c+ord('A')))
+        toReturn = ""
+        for x in chars:
+                toReturn += x
+        return toReturn
+		
+
+def Viginere(message, keyword):
+	message = toNumbers(message)
+	keyword = toNumbers(keyword)
+	i = 0
+	j = 0
+	for i in range(0,len(message)):
+		message[i] = ( message[i] + keyword[j] ) % 27
+		j+=1
+		j = j % (len(keyword) - 1)
+	return toWords(message)
+#Decrypts from a Viginere cipher
+#encrypted is the encrypted message
+#containing only capital letters and spaces
+#keyword is the keyword used to encrypt the message
+def deViginere(message, keyword):
+	message = toNumbers(message)
+	keyword = toNumbers(keyword)
+	i = 0
+	j = 0
+	for i in range(0,len(message)):
+		message[i] = ( message[i] - keyword[j] ) % 27
+		j+=1
+		j = j % (len(keyword) - 1)
+	return toWords(message)
+
+"""
+lolololololololololololololololololololololololololol
+"""
+
+#computes a^b mod n
+#uses successive squaring and is EFFIECIENT!
+def modpow(a,b,n,d):
+	a = a %n
+	if (b == 1):
+		return(((a % n) * d) % n)
+	elif (b % 2 == 1):
+		return modpow(a,(b-1),n,(a * d % n))
+	else:
+		return modpow(((a ** 2) % n),(b / 2),n,d % n)
+
+### Encodes using RSA
+### Takes a list of numbers and returns of list 
+### of these number raised to the e power mod m	
+def LRSA(L,m,e):
+	for i in range(0,len(L)):
+		L[i] = modpow(L[i],e,m,1)
+	
+	return L
+
+
+### Takes a message and returns a list of numbers
+### that has been encoded using RSA.
+def RSA(message,m,e):
+	message = toNumbers(message)
+	for i in range(0,len(message)):
+		message[i] = modpow(message[i],e,m,1)
+	return message
+
+"""
+lolololololololololololololololololololololololololol
+"""
+
+#Finds the gcd of two numbers
+#Implements the Enclidean algorithm
+def gcdEA(a,b):
+	#take your two numbers
+	x = 10
+	i = 1
+	aa = [0,1]
+	use_later = a
+	if(b > a):
+		x = a
+		a = b
+		b = x
+	#figure out how many of the smaller numbers go into the biggest numbers
+	while(x > 1):
+		aa.append(aa[i - 1] + (-int(a / b) * aa[i]))
+		x = a % b		
+		a = b
+		b = x
+		i += 1
+		print aa[i]
+	return (aa[len(aa) - 1] + use_later)
+"""
+lolololololololololololololololololololololololololol
+"""
+
+### Takes a list of numbers that has been RSA-encoded
+### using public key m=pq and e, returns the decrypted
+### message.
+def unRSA(L,p,q,e):
+	m = p * q	
+	n = (p - 1) * (q - 1)
+	d = modinv(e,n)	
+	print d
+	for i in range(0,len(L)):
+		L[i] = modpow(L[i],m,d,1)
+	L = toWords(L)
+	return L
+
+### Computes the multiplicative inverse of a mod n
+### Should use the euclidean algorithm if you want it 
+### to be fast.
+def modinv(a,n):
+	inv = gcdEA(a,n)
+	return inv
+
+
+### Implements the seive of Eratosthenes to find all prime
+### numbers up to n.
+def Sieve(n):
+	return ''
+
+
+### Tests to see if a witnesses the compositeness of p
+### using the Miller Rabin test for primality.
+def MRwitness(p,a):
+	return 
+
+def table(n):
+	for i in range(1,n):
+		ls = []
+		for j in range(1,n):
+			ls.append([modpow(i,j,n,1)])
+		print ls
+	return True			
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+#Factoring, primes and base26
+#Takes a natural number and returns a list of its divisors.
+def divs(n):
+	display = []
+	for p in range(1,int(n ** .5) + 1):
+		if((n % p) == 0):
+			q = n / p 
+			display.append(p)
+			display.append(q)	
+	return display
+	
+#Takes a natural number and determines whether it is prime.
+#Returns True if the number is prime; false otherwise
+def isPrime(n):
+	div = divs(n)
+	if(len(div) >= 3):
+		return False  
+	return True
+
+#Takes a natural number and returns a list representing its prime factorization
+def factors(n):
+	display = []
+	count = 3
+	while(n % 2 == 0):
+			display.append(2)
+			n = n / 2
+			#print (n,count)	
+	while( n > 1):
+		while(n % count == 0):
+			display.append(count)
+			n = n / count
+			#print (n,count)
+		count+=2		
+	return display
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""		
+def table_unknown(n):
+#calculates primes (y - axis) 
+	x_axis = [1]
+	primes = factors(n)  
+	if( n % 2 != 0):
+		x_axis.append(2)
+	for i in range(3,n,2):
+		for j in range(0,len(primes)):
+			if( i % primes[j] != 0 ):
+				x_axis.append(i)
+				break
+#calculates phi(x axis) 
+	phi = len(x_axis)
+#makes and prints exponentiation table
+	for i in range(1,len(x_axis)):
+		ls = []
+		for j in range(1,phi + 1):
+			ls.append([modpow(x_axis[i],j,n,1)])
+		print ls
+	print "these are the primes: "
+	return x_axis
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
+"""
+def MR(a,m):
+# calculate s , d in m = (2 ** s) * d
+	s = 0
+	m = m - 1
+	n = m
+	while((n % 2 == 0):
+		n = n / 2
+		s += 1
+	#throws away n
+	d = m / (2 ** s)
+	print s,d
+# finds witness / liars
+	s_end = s + 1
+	initial = modpow(a,d,m + 1,1)
+	if(initial == 1):
+		return "inconclusive"	
+
+
+	while (s_end > 0):
+		SS = 0
+		count = 2 ** (s - s_end)
+		liar = modpow(initial,count,m + 1,1)		
+		if(liar ==  m and 1 == modpow(liar,2,m + 1,1)):
+			return "99% chance true"
+		SS += 1
+		s_end -= 1
+	return "liar!?"
+"""
+	 
+
+
+
+
+
+
+
+
