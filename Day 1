@@ -1,0 +1,56 @@
+#Summer Math Program
+#Lab 1
+#Getting familiar with Sage
+
+#Computes n!
+def factorial(n):
+	product = 1
+	while n > 1:
+		product *= n
+		n -= 1
+
+	return product
+
+#for i in range(1,x):
+	
+#	return 1
+	
+#Computes n! recursively
+def rFactorial(n,k):
+	#p = 0
+	#factorial(n) = N
+	#factorial(k) = K
+	return factorial(n) / (factorial(n) * factorial(n - k))
+	
+
+#def pythag(a, b, c):
+
+
+def one(X):
+	SUM = 0
+	total=[]
+	n = X
+	getLength = 0
+	i = 0
+	#defines length of number	
+	while n >= 10:
+		n = n / 10
+		getLength+=1
+	#stores single digits
+	while getLength >= 0:
+		wierd = X / (10 **(getLength + 1))
+		total.append(wierd)		
+		getLength-=1
+		i+=1
+	#add and returns single digits
+	while i >= 0:
+		SUM = SUM + total[i]
+		i-=1	 	
+
+	return SUM
+
+
+
+#computes n choose k
+#def choose(n,k):
+#	return 1
