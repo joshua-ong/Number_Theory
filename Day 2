@@ -1,0 +1,155 @@
+#Summer Math Program
+#Lab 2
+#Simple Ciphers
+
+#Converts a string to a list of numbers
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toNumbers(message):
+	letters = []
+        for i in xrange(len(message)):
+                #print message[i]                                               
+                if ord('A') <= ord(message[i]) <= ord('Z'):
+                        letters.append(ord(message[i]) - ord('A'))
+                elif message[i] == ' ':
+                        letters.append(26)
+        return letters
+        
+#Converts a list of numbers to a string
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toWords(nmbrs):
+	chars=[]
+        for c in nmbrs:
+                if c == 26:
+                        chars.append(' ')
+                else:
+                        chars.append(chr(c+ord('A')))
+        toReturn = ""
+        for x in chars:
+                toReturn += x
+        return toReturn
+
+### BEGIN EXAMPLE ###
+A=[]
+for x in range(0,20):
+	if x%3==0:
+		A.append(x)
+print A
+
+print A[5]
+
+print len(A)
+
+for x in range(0,len(A)):
+	A[x]=A[x]+1
+
+print A
+
+for x in range(0,len(A)):
+	if x%2==0:
+		A[x]=A[x]+1
+	if x%2==1:
+		A[x]=A[x]-1
+print A
+
+### End EXAMPLE ###
+
+        
+#Implements a Caesar cipher
+#message is the message to be encrypted
+#containing only capital letters and spaces
+#Shift is the number by which the message is shifted
+def Caesar(message, shift):
+	i = 0
+	message = toNumbers(message)
+	while (len(message) > i):
+		message[i] = ( message[i] + shift ) % 27
+		i+=1
+	message = toWords(message)
+	return message
+	
+#Implements a Viginere cipher
+#Message is the message to be encrypted
+#containing only capital letters and spaces
+#keyword is the keyword used to encrypt the message
+
+def Viginere(message, keyword):
+	message = toNumbers(message)
+	keyword = toNumbers(keyword)
+	i = 0
+	j = 0
+	for i in range(0,len(message)):
+		message[i] = ( message[i] + keyword[j] ) % 27
+		j+=1
+		j = j % (len(keyword) - 1)
+	return toWords(message)
+#Decrypts from a Viginere cipher
+#encrypted is the encrypted message
+#containing only capital letters and spaces
+#keyword is the keyword used to encrypt the message
+def deViginere(message, keyword):
+	message = toNumbers(message)
+	keyword = toNumbers(keyword)
+	i = 0
+	j = 0
+	for i in range(0,len(message)):
+		message[i] = ( message[i] - keyword[j] ) % 27
+		j+=1
+		j = j % (len(keyword) - 1)
+	message = toWords(message)
+	return message
+"""
+def easy(MAX):
+	j = 0
+	J = 0
+	k = 0
+	K = 0
+	while(MAX >= j):
+		J = J + (j**2)
+		j+=1
+	while(MAX >= k):
+		K = K + 0
+		K+=1
+
+	K = K**2		
+
+	MAX = K - J
+	return MAX
+"""
+
+def fib(MAX):
+	a1 = 1
+	a2 = 1
+	n = 0	
+	total = 2
+	while( (MAX-2) > n):
+		a1 = a1 + a2
+		n+=1
+		total = total + a1
+		if ((MAX-2) == n):
+			return total
+		a2 = a1 + a2
+		n+=1
+		total = total + a2
+	return total	
+"""	
+def tri(n):
+	Sum = 0	
+	value = 0
+	count = 0
+	while( n > 0):
+		while( n > 0)
+		Sum =		
+		n-=1
+	"""
+
+
+
+
+
+
+
+
+
+
