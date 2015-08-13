@@ -1,0 +1,67 @@
+#Summer Math Program
+#Lab 6
+#Prime Factorization and Greatest Common Divisors
+"""
+#Factoring, primes and base26
+#Takes a natural number and returns a list of its divisors.
+def divs(n):
+	display = []
+	for p in range(1,int(n ** .5) + 1):
+		if((n % p) == 0):
+			q = n / p 
+			display.append(p)
+			display.append(q)	
+	return display
+"""
+#Takes a natural number and returns a list representing its prime factorization
+def factors(n):
+	display = []
+	count = 3
+	while(n % 2 == 0):
+			display.append(2)
+			n = n / 2
+			#print (n,count)	
+	while( n > 1):
+		while(n % count == 0):
+			display.append(count)
+			n = n / count
+			#print (n,count)
+		count+=2		
+	return display
+	
+#Finds the gcd of two numbers
+#Finds their prime factorization and returns product of common factors
+def gcdFact(a,b):
+	A = factors(a)
+	B = factors(b)
+	total = 1
+	print A
+	print B
+	for i in A:
+		if i in B:
+			total = total * i
+			B.remove(i)
+	return total
+	
+#Finds the gcd of two numbers
+#Implements the Enclidean algorithm
+def gcdEA(a,b):
+	#take your two numbers
+	if(b > a):
+		x = a
+		a = b
+		b = x
+	x = 1 
+	#figure out how many of the smaller numbers go into the biggest numbers
+	while(x > 0):
+		x = a % b
+		a = b
+		b = x
+		print (x,b,a)
+	return a
+
+def loop(a,b):
+	if(a > 0):
+		a = loop(b,b%a)
+	return b%a	 
+
