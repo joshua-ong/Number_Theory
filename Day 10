@@ -1,0 +1,180 @@
+#Converts a string to a list of numbers
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toNumbers(message):
+	letters = []
+        for i in xrange(len(message)):
+                #print message[i]                                               
+                if ord('A') <= ord(message[i]) <= ord('Z'):
+                        letters.append(ord(message[i]) - ord('A'))
+                elif message[i] == ' ':
+                        letters.append(26)
+        return letters
+        
+#Converts a list of numbers to a string
+#Uses A=0, B=1, C=2, etc, with ' '=26
+#Handles only capital letters and spaces
+def toWords(nmbrs):
+	chars=[]
+        for c in nmbrs:
+                if c == 26:
+                        chars.append(' ')
+                else:
+                        chars.append(chr(c+ord('A')))
+        toReturn = ""
+        for x in chars:
+                toReturn += x
+        return toReturn
+
+"""
+Struct
+
+"""
+
+#computes a^b mod n
+#uses successive squaring and is EFFIECIENT!
+def modpow(a,b,n,d):
+	a = a %n
+	if (b == 1):
+		return(((a % n) * d) % n)
+	elif (b % 2 == 1):
+		return modpow(a,(b-1),n,(a * d % n))
+	else:
+		return modpow(((a ** 2) % n),(b / 2),n,d % n)
+
+#Finds the gcd of two numbers
+#Implements the Enclidean algorithm
+def gcdEA(a,b):
+	#take your two numbers
+	x = 10
+	i = 1
+	aa = [0,1]
+	if(b > a):
+		x = a
+		a = b
+		b = x
+	use_later = a
+	#figure out how many of the smaller numbers go into the biggest numbers
+	while(x > 1):
+		aa.append(aa[i - 1] + (-int(a / b) * aa[i]))
+		x = a % b		
+		a = b
+		b = x
+		i += 1
+		#print aa[i]
+	return ((aa[len(aa) - 1]) + use_later)
+
+"""
+
+RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA 
+                    RSA RSA 
+	RSA RSA RSA RSA RSA RSA RSA RSA RSA                                 RSA           
+    RSA RSA       RSA RSA RSA RSA RSA RSA RSA	                            RSA
+  RSA RSA        RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSARSA RSA RSA RSA RSA RSA
+RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA
+  RSA RSA RSA RSARSA RSA RSA RSA RSA RSA RSA RSA                            RSA 
+     RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA                                RSA
+	RSA RSA RSA RSA RSA RSA RSA RSA RSA
+	RSA				RSA
+RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA RSA 
+
+"""
+
+### Takes a message and returns a list of numbers
+### that has been encoded using RSA.
+def RSA(message,m,e):
+	message = toNumbers(message)
+	for i in range(0,len(message)):
+		message[i] = modpow(message[i],e,m,1)
+	return message
+
+### Takes a list of numbers that has been RSA-encoded
+### using public key m=pq and e, returns the decrypted
+### message.
+def unRSA(L,p,q,e):
+	m = p * q	
+	n = (p - 1) * (q - 1)
+	d = modinv(e,n)	
+	print d
+	for i in range(0,len(L)):
+		L[i] = modpow(L[i],d,m,1) % 26
+	L = toWords(L)
+	return L
+
+### Computes the multiplicative inverse of a mod n
+### Should use the euclidean algorithm if you want it 
+### to be fast.
+def modinv(a,n):
+	inv = gcdEA(a,n)
+	return inv
+
+"""
+
+	primes 
+    primes primes 
+  primes primes prime 
+    primes primes 
+0	primes 
+ 1   pr imes pri 
+  01    primes 
+     01	pr  es
+"""
+
+#Factoring, primes and base26
+#Takes a natural number and returns a list of its divisors.
+def divs(n):
+	display = []
+	for p in range(1,int(n ** .5) + 1):
+		if((n % p) == 0):
+			q = n / p 
+			display.append(p)
+			display.append(q)	
+	return display
+	
+#Takes a natural number and determines whether it is prime.
+#Returns True if the number is prime; false otherwise
+def isPrime(n):
+	div = divs(n)
+	if(len(div) >= 3):
+		return False  
+	return True
+
+def MR(a,m):
+# calculate s , d in m = (2 ** s) * d
+	s = 0
+	m = m - 1
+	n = m
+	while(n % 2 == 0):
+		n = n / 2
+		s += 1
+	#throws away n
+	d = m / (2 ** s)
+	print s,d
+# finds witness / liars
+	s_end = s
+	initial = modpow(a,d,m + 1,1)
+	if(initial == 1):
+		return "true"	
+	while (s_end > 0):
+		count = 2 ** (s - s_end)
+		liar = modpow(initial,count,m + 1,1)		
+		if(liar ==  m ):
+			return "99% chance true"
+		s_end -= 1 
+	return "false"
+
+
+def ls(MAX):
+	while MR(2,MAX) == "false":
+		MAX += 2
+	while MR(3,MAX) == "false":
+		MAX += 2
+	while MR(5,MAX) == "false":
+		MAX += 2
+	while MR(7,MAX) == "false":
+		MAX += 2	
+	print "99% chance true"
+	return MAX
+
+	
+	
