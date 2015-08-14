@@ -1,3 +1,5 @@
+#This code is reorganized and polished from day 9 for game day
+
 #Converts a string to a list of numbers
 #Uses A=0, B=1, C=2, etc, with ' '=26
 #Handles only capital letters and spaces
@@ -163,7 +165,7 @@ def MR(a,m):
 		s_end -= 1 
 	return "false"
 
-
+###Putting it through the Muller-Robin Primality test
 def ls(MAX):
 	while MR(2,MAX) == "false":
 		MAX += 2
