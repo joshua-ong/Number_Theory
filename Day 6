@@ -1,4 +1,6 @@
-
+#Today I made some foundational programs to more complicated algorithms
+#I made functions to find prime factorization and gcd's
+#Today helped me learn that a lot of code is made from smaller functions to get a final product
 
 #Summer Math Program
 #Lab 6
@@ -42,26 +44,4 @@ def gcdFact(a,b):
 			total = total * i
 			B.remove(i)
 	return total
-	
-#Finds the gcd of two numbers
-#Implements the Enclidean algorithm
-def gcdEA(a,b):
-	#take your two numbers
-	if(b > a):
-		x = a
-		a = b
-		b = x
-	x = 1 
-	#figure out how many of the smaller numbers go into the biggest numbers
-	while(x > 0):
-		x = a % b
-		a = b
-		b = x
-		print (x,b,a)
-	return a
-
-def loop(a,b):
-	if(a > 0):
-		a = loop(b,b%a)
-	return b%a	 
 
