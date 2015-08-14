@@ -1,3 +1,7 @@
+#One of the milestones of cryptography is the vigenere cipher
+#My challenge on day two was to create an algorithm using the vigenere cipher
+#For example if every letter represents a number, cat + aaa = dbu
+
 #Summer Math Program
 #Lab 2
 #Simple Ciphers
@@ -29,32 +33,6 @@ def toWords(nmbrs):
         for x in chars:
                 toReturn += x
         return toReturn
-
-### BEGIN EXAMPLE ###
-A=[]
-for x in range(0,20):
-	if x%3==0:
-		A.append(x)
-print A
-
-print A[5]
-
-print len(A)
-
-for x in range(0,len(A)):
-	A[x]=A[x]+1
-
-print A
-
-for x in range(0,len(A)):
-	if x%2==0:
-		A[x]=A[x]+1
-	if x%2==1:
-		A[x]=A[x]-1
-print A
-
-### End EXAMPLE ###
-
         
 #Implements a Caesar cipher
 #message is the message to be encrypted
@@ -84,6 +62,7 @@ def Viginere(message, keyword):
 		j+=1
 		j = j % (len(keyword) - 1)
 	return toWords(message)
+	
 #Decrypts from a Viginere cipher
 #encrypted is the encrypted message
 #containing only capital letters and spaces
@@ -99,25 +78,8 @@ def deViginere(message, keyword):
 		j = j % (len(keyword) - 1)
 	message = toWords(message)
 	return message
-"""
-def easy(MAX):
-	j = 0
-	J = 0
-	k = 0
-	K = 0
-	while(MAX >= j):
-		J = J + (j**2)
-		j+=1
-	while(MAX >= k):
-		K = K + 0
-		K+=1
 
-	K = K**2		
-
-	MAX = K - J
-	return MAX
-"""
-
+#gives the n number in the fibonacci sequence	
 def fib(MAX):
 	a1 = 1
 	a2 = 1
@@ -133,16 +95,6 @@ def fib(MAX):
 		n+=1
 		total = total + a2
 	return total	
-"""	
-def tri(n):
-	Sum = 0	
-	value = 0
-	count = 0
-	while( n > 0):
-		while( n > 0)
-		Sum =		
-		n-=1
-	"""
 
 
 
