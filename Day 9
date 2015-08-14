@@ -1,4 +1,5 @@
-
+#This is the first day we used computers for maths research on patterns of phi of a number. (numbers realtively prime to N)
+#I implemented several technical algorithms including RSA, Enclidean algorithm, and the Muller-Robin primality test
 
 import random
 
@@ -42,23 +43,6 @@ def modpow(a,b,n,d):
 	else:
 		return modpow(((a ** 2) % n),(b / 2),n,d % n)
 
-### Encodes using RSA
-### Takes a list of numbers and returns of list 
-### of these number raised to the e power mod m	
-def LRSA(L,m,e):
-	for i in range(0,len(L)):
-		L[i] = modpow(L[i],e,m,1)
-	
-	return L
-
-
-### Takes a message and returns a list of numbers
-### that has been encoded using RSA.
-def RSA(message,m,e):
-	message = toNumbers(message)
-	for i in range(0,len(message)):
-		message[i] = modpow(message[i],e,m,1)
-	return message
 
 #Finds the gcd of two numbers
 #Implements the Enclidean algorithm
@@ -81,8 +65,24 @@ def gcdEA(a,b):
 		i += 1
 		print aa[i]
 	return (aa[len(aa) - 1] + use_later)
+	
+### Encodes using RSA
+### Takes a list of numbers and returns of list 
+### of these number raised to the e power mod m	
+def LRSA(L,m,e):
+	for i in range(0,len(L)):
+		L[i] = modpow(L[i],e,m,1)
+	
+	return L
 
 
+### Takes a message and returns a list of numbers
+### that has been encoded using RSA.
+def RSA(message,m,e):
+	message = toNumbers(message)
+	for i in range(0,len(message)):
+		message[i] = modpow(message[i],e,m,1)
+	return message
 
 ### Takes a list of numbers that has been RSA-encoded
 ### using public key m=pq and e, returns the decrypted
@@ -104,29 +104,12 @@ def modinv(a,n):
 	inv = gcdEA(a,n)
 	return inv
 
-
+### UNFINISHED
 ### Implements the seive of Eratosthenes to find all prime
 ### numbers up to n.
 def Sieve(n):
 	return ''
 
-
-### Tests to see if a witnesses the compositeness of p
-### using the Miller Rabin test for primality.
-def MRwitness(p,a):
-	return 
-
-def table(n):
-	for i in range(1,n):
-		ls = []
-		for j in range(1,n):
-			ls.append([modpow(i,j,n,1)])
-		print ls
-	return True			
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 #Factoring, primes and base26
 #Takes a natural number and returns a list of its divisors.
@@ -162,33 +145,7 @@ def factors(n):
 			#print (n,count)
 		count+=2		
 	return display
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""		
-def table_unknown(n):
-#calculates primes (y - axis) 
-	x_axis = [1]
-	primes = factors(n)  
-	if( n % 2 != 0):
-		x_axis.append(2)
-	for i in range(3,n,2):
-		for j in range(0,len(primes)):
-			if( i % primes[j] != 0 ):
-				x_axis.append(i)
-				break
-#calculates phi(x axis) 
-	phi = len(x_axis)
-#makes and prints exponentiation table
-	for i in range(1,len(x_axis)):
-		ls = []
-		for j in range(1,phi + 1):
-			ls.append([modpow(x_axis[i],j,n,1)])
-		print ls
-	print "these are the primes: "
-	return x_axis
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""	
-"""
 def MR(a,m):
 # calculate s , d in m = (2 ** s) * d
 	s = 0
@@ -206,7 +163,6 @@ def MR(a,m):
 	if(initial == 1):
 		return "inconclusive"	
 
-
 	while (s_end > 0):
 		SS = 0
 		count = 2 ** (s - s_end)
@@ -216,9 +172,28 @@ def MR(a,m):
 		SS += 1
 		s_end -= 1
 	return "liar!?"
-"""
 	 
-
+###for maths research!		
+def table_unknown(n):
+#calculates primes (y - axis) 
+	x_axis = [1]
+	primes = factors(n)  
+	if( n % 2 != 0):
+		x_axis.append(2)
+	for i in range(3,n,2):
+		for j in range(0,len(primes)):
+			if( i % primes[j] != 0 ):
+				x_axis.append(i)
+				break
+				
+#makes and prints exponentiation table
+	for i in range(1,len(x_axis)):
+		ls = []
+		for j in range(1,phi + 1):
+			ls.append([modpow(x_axis[i],j,n,1)])
+		print ls
+	print "these are the primes: "
+	return x_axis
 
 
 
