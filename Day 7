@@ -1,5 +1,10 @@
+#Today I learned how math is essential in writing good programs!!
+#Today I learned about recursive functions
+#
+
 #computes a^b mod n
 #uses successive squaring and is EFFIECIENT!
+#d always = 1
 def modpow(a,b,n,d):
 	a = a %n
 	if (b == 1):
@@ -26,7 +31,7 @@ def gcdEA(a,b):
 		x = a % b
 		a = b
 		b = x
-		print (a,b,x,count)
+		#print (a,b,x,count)
 	ls = []
 	ls.append(x)
 	ls.append(count)
@@ -43,7 +48,7 @@ def modinv(a,n):
 	return count
 
 """
-old stufffff
+foundation for above code
 """
 #Factoring, primes and base26
 #Takes a natural number and returns a list of its divisors.
@@ -63,6 +68,7 @@ def isPrime(n):
 	if(len(div) >= 3):
 		return False  
 	return True
+	
 #Computes how many numbers below n are relatively prime to n
 #by checking every number one at a time
 def phi(n):
@@ -71,22 +77,6 @@ def phi(n):
 		if(isPrime(i) == True):
 			ls.append(i)
 	return ls
-
-
-#Computes how many numbers below n are relatively prime to n
-#using the prime factorization of n and the formulas we 
-#have seen
-def phi2(n):
-	return 0
-
-def mi(n):
-	ls = []
-	while(n < 12252240):
-		if(n % 4199 == 0):
-			ls.append(n)			
-		n = n * 19
-	return ls
-
 
 
 
