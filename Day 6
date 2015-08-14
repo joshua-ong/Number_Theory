@@ -1,7 +1,9 @@
+
+
 #Summer Math Program
 #Lab 6
 #Prime Factorization and Greatest Common Divisors
-"""
+
 #Factoring, primes and base26
 #Takes a natural number and returns a list of its divisors.
 def divs(n):
@@ -12,7 +14,7 @@ def divs(n):
 			display.append(p)
 			display.append(q)	
 	return display
-"""
+
 #Takes a natural number and returns a list representing its prime factorization
 def factors(n):
 	display = []
@@ -29,14 +31,12 @@ def factors(n):
 		count+=2		
 	return display
 	
-#Finds the gcd of two numbers
+#Finds the gcd (greatest common divisor) of two numbers
 #Finds their prime factorization and returns product of common factors
 def gcdFact(a,b):
 	A = factors(a)
 	B = factors(b)
 	total = 1
-	print A
-	print B
 	for i in A:
 		if i in B:
 			total = total * i
