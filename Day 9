@@ -1,5 +1,6 @@
-import random
 
+
+import random
 
 #Converts a string to a list of numbers
 #Uses A=0, B=1, C=2, etc, with ' '=26
@@ -30,35 +31,6 @@ def toWords(nmbrs):
         return toReturn
 		
 
-def Viginere(message, keyword):
-	message = toNumbers(message)
-	keyword = toNumbers(keyword)
-	i = 0
-	j = 0
-	for i in range(0,len(message)):
-		message[i] = ( message[i] + keyword[j] ) % 27
-		j+=1
-		j = j % (len(keyword) - 1)
-	return toWords(message)
-#Decrypts from a Viginere cipher
-#encrypted is the encrypted message
-#containing only capital letters and spaces
-#keyword is the keyword used to encrypt the message
-def deViginere(message, keyword):
-	message = toNumbers(message)
-	keyword = toNumbers(keyword)
-	i = 0
-	j = 0
-	for i in range(0,len(message)):
-		message[i] = ( message[i] - keyword[j] ) % 27
-		j+=1
-		j = j % (len(keyword) - 1)
-	return toWords(message)
-
-"""
-lolololololololololololololololololololololololololol
-"""
-
 #computes a^b mod n
 #uses successive squaring and is EFFIECIENT!
 def modpow(a,b,n,d):
@@ -88,10 +60,6 @@ def RSA(message,m,e):
 		message[i] = modpow(message[i],e,m,1)
 	return message
 
-"""
-lolololololololololololololololololololololololololol
-"""
-
 #Finds the gcd of two numbers
 #Implements the Enclidean algorithm
 def gcdEA(a,b):
@@ -113,9 +81,8 @@ def gcdEA(a,b):
 		i += 1
 		print aa[i]
 	return (aa[len(aa) - 1] + use_later)
-"""
-lolololololololololololololololololololololololololol
-"""
+
+
 
 ### Takes a list of numbers that has been RSA-encoded
 ### using public key m=pq and e, returns the decrypted
