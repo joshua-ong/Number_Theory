@@ -1,3 +1,8 @@
+#Today I implented an affine cipher
+#Similiar to the vigenere, affine ciphers multiply keyword to get an encrypted message
+#I also learned about matrices and wrote a cipher utilizing that python already can multiply matrices.
+
+
 #Summer Math Program
 #Lab 3
 #Affine Ciphers
@@ -31,32 +36,6 @@ def toWords(nmbrs):
         return toReturn
 		
 
-def Viginere(message, keyword):
-	message = toNumbers(message)
-	keyword = toNumbers(keyword)
-	i = 0
-	j = 0
-	for i in range(0,len(message)):
-		message[i] = ( message[i] + keyword[j] ) % 27
-		j+=1
-		j = j % (len(keyword) - 1)
-	return toWords(message)
-#Decrypts from a Viginere cipher
-#encrypted is the encrypted message
-#containing only capital letters and spaces
-#keyword is the keyword used to encrypt the message
-def deViginere(message, keyword):
-	message = toNumbers(message)
-	keyword = toNumbers(keyword)
-	i = 0
-	j = 0
-	for i in range(0,len(message)):
-		message[i] = ( message[i] - keyword[j] ) % 27
-		j+=1
-		j = j % (len(keyword) - 1)
-	return toWords(message)
-
-        
 #Implements an affine cipher
 #message is the message to be encrypted
 #containing only capital letters and spaces
@@ -76,8 +55,6 @@ def unAffine(message, a, b):
 	return toWords(message)
 		
 
-
-
 # Takes a message and returns a matrix consisting of two rows
 # The first row should be the first half of the message
 # The second row should be the second half of the message
@@ -94,7 +71,6 @@ def block(message):
 def unblock(matrix):
 	return matrix[0].append(matrix[1])
 
-
 #Implements a block cipher
 #message is the message to be encrypted
 #containing only capital letters and spaces
@@ -107,14 +83,19 @@ def blockAffine(message,matrix):
 	message = (message * matrix) % 27
 	unblock(message)
 	return message
-	#decode
-"""	
+
+#decodes a block cipher
+#message is the message to be encrypted
+#containing only capital letters and spaces
+#matrix is an 2x2 matrix
+#takes vector x to (matrix)x mod 27
+def unblockAffine(message,matrix):
 	block(message)
 	block(matrix)
 	matrix.inverse()
 	message = (message * matrix) % 27
 	unblock(message)
-"""		
+	return message
 
 
 
